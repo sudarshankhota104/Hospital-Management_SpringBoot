@@ -1,0 +1,100 @@
+{
+  "info": {
+    "name": "Hospital Appointment Management API",
+    "description": "Postman collection for Hospital Appointment Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Create Department",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"departmentName\": \"Cardiology\",\n  \"departmentCode\": \"CARD\",\n  \"location\": \"Block A\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/departments",
+          "host": ["{{baseUrl}}"],
+          "path": ["departments"]
+        }
+      }
+    },
+    {
+      "name": "Create Doctor",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"doctorName\": \"Dr. Priya Singh\",\n  \"specialization\": \"Cardiology\",\n  \"email\": \"priya.singh@example.com\",\n  \"phone\": \"9876543210\",\n  \"experience\": 12,\n  \"consultationFee\": 350.00,\n  \"departmentId\": 1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/doctors",
+          "host": ["{{baseUrl}}"],
+          "path": ["doctors"]
+        }
+      }
+    },
+    {
+      "name": "Create Patient",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"patientName\": \"Amit Kumar\",\n  \"gender\": \"MALE\",\n  \"bloodGroup\": \"O_POSITIVE\",\n  \"age\": 32,\n  \"phone\": \"9123456780\",\n  \"email\": \"amit.kumar@example.com\",\n  \"address\": \"123 Gandhi Nagar\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/patients",
+          "host": ["{{baseUrl}}"],
+          "path": ["patients"]
+        }
+      }
+    },
+    {
+      "name": "Create Appointment",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"appointmentDate\": \"2026-07-20\",\n  \"appointmentTime\": \"10:30:00\",\n  \"appointmentStatus\": \"BOOKED\",\n  \"doctorId\": 1,\n  \"patientId\": 1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/appointments",
+          "host": ["{{baseUrl}}"],
+          "path": ["appointments"]
+        }
+      }
+    },
+    {
+      "name": "Create Prescription",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"diagnosis\": \"Acute bronchitis\",\n  \"medicines\": \"Medicine A, Medicine B\",\n  \"notes\": \"Follow up after 7 days\",\n  \"appointmentId\": 1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/prescriptions",
+          "host": ["{{baseUrl}}"],
+          "path": ["prescriptions"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+EchoAPI and VS Code Testing Guide
+=================================
+
+This file explains how to test your Hospital Appointment Management API using VS Code, with special notes for echoapi.com and local testing.
+
+1. Overview
+-----------
+
+- Your application runs locally on: http://localhost:8080
+- Use echoapi.com only if you want to test that your HTTP client setup works or to inspect request formatting.
+- For actual CRUD testing of your application, use http://localhost:8080 and your API routes.
+
+2. Fix the "getaddrinfo ENOTFOUND api" error
+---------------------------------------------
+
+That error means the hostname is wrong. It happens when the request is trying to connect to host `api` instead of a full URL like `http://localhost:8080`.
+
+In Postman or VS Code REST Client, set the host to `http://localhost:8080`, not `api`.
+
+Example correct base URL:
+
+    http://localhost:8080
+
+3. Testing with VS Code REST Client
+-----------------------------------
+
+Install the extension: "REST Client" by Huachao Mao.
+
+Create a file named `hospital-api.rest` or `hospital-api.http` in your workspace.
+
+Use these request examples:
+
+----
+# Create Department
+POST http://localhost:8080/departments
+Content-Type: application/json
+
+{
+  "departmentName": "Cardiology",
+  "departmentCode": "CARD",
+  "location": "Block A"
+}
+
+----
+# Create Doctor
+POST http://localhost:8080/doctors
+Content-Type: application/json
+
+{
+  "doctorName": "Dr. Priya Singh",
+  "specialization": "Cardiology",
+  "email": "priya.singh@example.com",
+  "phone": "9876543210",
+  "experience": 12,
+  "consultationFee": 350.00,
+  "departmentId": 1
+}
+
+----
+# Create Patient
+POST http://localhost:8080/patients
+Content-Type: application/json
+
+{
+  "patientName": "Amit Kumar",
+  "gender": "MALE",
+  "bloodGroup": "O_POSITIVE",
+  "age": 32,
+  "phone": "9123456780",
+  "email": "amit.kumar@example.com",
+  "address": "123 Gandhi Nagar"
+}
+
+----
+# Create Appointment
+POST http://localhost:8080/appointments
+Content-Type: application/json
+
+{
+  "appointmentDate": "2026-07-20",
+  "appointmentTime": "10:30:00",
+  "appointmentStatus": "BOOKED",
+  "doctorId": 1,
+  "patientId": 1
+}
+
+----
+# Create Prescription
+POST http://localhost:8080/prescriptions
+Content-Type: application/json
+
+{
+  "diagnosis": "Acute bronchitis",
+  "medicines": "Medicine A, Medicine B",
+  "notes": "Follow up after 7 days",
+  "appointmentId": 1
+}
+
+4. Testing echoapi.com in VS Code
+----------------------------------
+
+If you want to test the HTTP client or verify network configuration, this is how to use echoapi.com in VS Code:
+
+GET https://api.echoapi.com/request?param=test
+
+The response will show the request details. If this works, your network and REST Client are fine.
+
+5. Use echoapi.com only for validation, not your app
+----------------------------------------------------
+
+- `https://api.echoapi.com` is an external echo service.
+- It is not your hospital API.
+- Use it to check that the tool is sending requests correctly.
+- Your actual API calls should use `http://localhost:8080`.
+
+6. Common request values and enum formats
+-----------------------------------------
+
+Patient fields:
+- `gender`: `MALE`, `FEMALE`, or `OTHER`
+- `bloodGroup`: `A_POSITIVE`, `A_NEGATIVE`, `B_POSITIVE`, `B_NEGATIVE`, `AB_POSITIVE`, `AB_NEGATIVE`, `O_POSITIVE`, `O_NEGATIVE`
+
+Appointment fields:
+- `appointmentDate`: `YYYY-MM-DD`
+- `appointmentTime`: `HH:mm:ss`
+- `appointmentStatus`: `BOOKED`, `CANCELLED`, or `COMPLETED`
+
+Doctor fields:
+- `consultationFee`: decimal number like `350.00`
+- `departmentId`: existing department ID
+
+Prescription fields:
+- `appointmentId`: existing appointment ID
+
+7. Fixing the Postman baseUrl variable
+--------------------------------------
+
+If you import `postman_collection.json` into Postman, set the environment variable `baseUrl` to:
+
+    http://localhost:8080
+
+Then the collection requests will work correctly.
+
+8. Extra tips
+-------------
+
+- Start your Spring Boot application before sending requests.
+- Check that Tomcat is running on port 8080.
+- Use `GET http://localhost:8080/swagger-ui.html` or `http://localhost:8080/swagger-ui/index.html` to inspect the API documentation.
+- If you get validation errors, read the JSON response for missing or invalid fields.
+
+9. Summary
+----------
+
+- Use `http://localhost:8080` for your local API.
+- Use `echoapi.com` only to validate request formatting.
+- Set `baseUrl` correctly in Postman or REST Client.
+- Send the JSON bodies exactly as shown above.
+
+That is everything you need to test your API in VS Code and avoid the `getaddrinfo ENOTFOUND api` error.
